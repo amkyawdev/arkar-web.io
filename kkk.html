@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Arkar Professional Life | ဆိုက်ကား & ရေးထပ်</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    :root {
+      --bg-body: #f5f3ef;
+      --surface: #ffffff;
+      --surface-soft: #fefcf8;
+      --text-primary: #1e1b1a;
+      --text-secondary: #4a4542;
+      --accent-red: #DA291C;
+      --accent-gold: #FFE500;
+      --border-light: #e6e2dc;
+      --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.08);
+      --card-radius: 28px;
+      --transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    body.dark {
+      --bg-body: #121212;
+      --surface: #1e1e1e;
+      --surface-soft: #252525;
+      --text-primary: #f0ede8;
+      --text-secondary: #bcb6ae;
+      --border-light: #2f2c29;
+      --accent-red: #ff4d3c;
+      --accent-gold: #ffea3a;
+      --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-primary);
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.2rem 1.8rem;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 0.8rem 0 1rem 0;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 2rem;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .svg-logo-container {
+      width: 70px;
+      height: 70px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1));
+    }
+
+    .site-title h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      background: linear-gradient(135deg, var(--accent-red), #b91c0e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .site-title p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .menu-btn {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 60px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .menu-btn span {
+      width: 22px;
+      height: 2px;
+      background-color: var(--text-primary);
+      border-radius: 2px;
+      transition: 0.25s;
+    }
+
+    .menu-btn:hover {
+      background: var(--accent-gold);
+      transform: scale(0.96);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--text-primary);
+      padding: 0.4rem 0;
+      border-bottom: 2px solid transparent;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      border-bottom-color: var(--accent-red);
+      color: var(--accent-red);
+    }
+
+    .theme-toggle {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 40px;
+      padding: 6px 12px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent-gold);
+      color: #1e1b1a;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.2s, opacity 0.2s;
+    }
+
+    .mobile-menu-overlay.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .mobile-nav-content {
+      background: var(--surface);
+      border-radius: 40px;
+      padding: 2rem 2.5rem;
+      width: 80%;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .mobile-nav-content a {
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text-primary);
+      padding: 0.5rem;
+    }
+
+    .close-mobile {
+      background: var(--accent-red);
+      border: none;
+      color: white;
+      padding: 0.5rem;
+      border-radius: 60px;
+      font-weight: bold;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+
+    section {
+      margin: 4rem 0;
+      scroll-margin-top: 90px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--accent-red);
+      border-radius: 4px;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .work-card {
+      background: var(--surface);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .work-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .img-container {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--surface-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .img-container img {
+      max-width: 85%;
+      max-height: 85%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+      transition: transform 0.3s;
+    }
+
+    .work-card:hover .img-container img {
+      transform: scale(1.02);
+    }
+
+    .work-info {
+      padding: 1.4rem;
+      text-align: center;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .work-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--accent-gold);
+      color: #1e1b1a;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+    }
+
+    .feature-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    .feature-card {
+      background: var(--surface);
+      border-radius: 32px;
+      flex: 1;
+      min-width: 260px;
+      text-align: center;
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      color: inherit;
+    }
+    .feature-card .img-holder {
+      aspect-ratio: 4 / 3;
+      background: var(--surface-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .feature-card .img-holder img {
+      width: 70%;
+      object-fit: contain;
+    }
+    .feature-card h3 {
+      padding: 1.2rem;
+      font-weight: 700;
+    }
+    .feature-card:hover {
+      transform: scale(1.02);
+      background: var(--accent-gold);
+      color: #1e1b1a;
+    }
+
+    .about-card {
+      background: var(--surface);
+      border-radius: 36px;
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+    }
+    .about-text {
+      flex: 2;
+    }
+    .about-text p {
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+    }
+    .about-icon {
+      flex: 1;
+      text-align: center;
+      font-size: 5rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border-light);
+      margin-top: 3rem;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 750px) {
+      .nav-links {
+        display: none;
+      }
+      .container {
+        padding: 1rem;
+      }
+      .site-title h1 {
+        font-size: 1.3rem;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (min-width: 751px) {
+      .menu-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="logo-area">
+      <div class="svg-logo-container" id="logo-svg"></div>
+      <div class="site-title">
+        <h1>Arkar Professional Life</h1>
+        <p>ဆိုက်ကား / ရေးထပ် ကျွမ်းကျင်မှု</p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="nav-links" id="desktopNav">
+        <a href="#home" class="nav-link active" data-nav="home">Home</a>
+        <a href="#work" class="nav-link" data-nav="work">Personal Work</a>
+        <a href="#about" class="nav-link" data-nav="about">About</a>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggleBtn">🌙 Night</button>
+        <button class="menu-btn" id="hamburgerBtn">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobileMenuOverlay" class="mobile-menu-overlay">
+    <div class="mobile-nav-content">
+      <a href="#home" class="mobile-nav-link">🏠 Home</a>
+      <a href="#work" class="mobile-nav-link">🧰 Personal Work</a>
+      <a href="#about" class="mobile-nav-link">👤 About</a>
+      <button class="close-mobile" id="closeMobileMenu">Close</button>
+    </div>
+  </div>
+
+  <section id="home">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <div style="max-width: 200px; margin: 0 auto 1rem auto;">
+        <div class="svg-logo-container" style="width: 140px; height: 140px; margin: 0 auto;" id="homeLogo"></div>
+      </div>
+      <h2 style="font-size: 2.5rem; font-weight: 800;">မောင်မောင်လွင်</h2>
+      <p style="font-size: 1.2rem; color: var(--accent-red); font-weight: 500;">ဂိုးသွင်းတာခံရတဲ့အသင်း ? မဟုတ်ဘူး! အလုပ်လုပ်တဲ့အသင်း</p>
+      <p style="margin-top: 0.8rem; max-width: 600px; margin-left: auto; margin-right: auto;">ဆိုက်ကားနင်းခြင်း၊ ရေထပ်ခြင်း နှင့် အလုပ်ကိုင် ကျွမ်းကျင်မှုတွေကို စိတ်ဝင်စားဖို့ ကောင်းအောင် တင်ဆက်ထားပါတယ်။</p>
+    </div>
+  </section>
+
+  <section id="work">
+    <h2 class="section-title">✨ Personal Work</h2>
+    <div class="feature-links">
+      <a href="#" class="feature-card" id="truckLink">
+        <div class="img-holder">
+          <img src="imgs/ဆိုက်ကား.png" alt="ဆိုက်ကားနင်းတဲ့ပုံ" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 80%27%3E%3Crect width=%27100%27 height=%2780%27 fill=%27%23ffe500%27/%3E%3Ctext x=%2712%27 y=%2745%27 fill=%27%23DA291C%27 font-size=%2720%27 font-weight=%27bold%27%3E🚛 ဆိုက်ကား%3C/text%3E%3C/svg%3E'">
+        </div>
+        <h3>🚛 ဆိုက်ကားနင်းတဲ့ပုံ</h3>
+      </a>
+      <a href="#" class="feature-card" id="waterLink">
+        <div class="img-holder">
+          <img src="imgs/ကူလီ.png" alt="ကူလီထမ်းသောပုံ" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 80%27%3E%3Crect width=%27100%27 height=%2780%27 fill=%27%23DA291C%27/%3E%3Ctext x=%2710%27 y=%2745%27 fill=%27%23FFE500%27 font-size=%2720%27%3E💧 ရေထပ်%3C/text%3E%3C/svg%3E'">
+        </div>
+        <h3>💧 ကူလီထမ်းပုံ</h3>
+      </a>
+    </div>
+
+    <div class="work-grid">
+      <div class="work-card">
+        <div class="img-container">
+          <img src="imgs/အမှိုက်.png" alt="အမှိုက်" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 120 120%27%3E%3Ccircle cx=%2760%27 cy=%2760%27 r=%2750%27 fill=%27%23444%27/%3E%3Ctext x=%2728%27 y=%2775%27 fill=%27white%27 font-size=%2728%27%3E🗑️%3C/text%3E%3C/svg%3E'">
+        </div>
+        <div class="work-info">
+          <h3>အမှိုက်</h3>
+          <span class="badge">စီမံခန့်ခွဲမှု</span>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="img-container">
+          <img src="imgs/ရေထမ်း.png" alt="ရေထမ်း" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 120 120%27%3E%3Crect width=%27120%27 height=%27120%27 fill=%27%23426bb4%27/%3E%3Ctext x=%2725%27 y=%2775%27 fill=%27white%27 font-size=%2740%27%3E💧%3C/text%3E%3C/svg%3E'">
+        </div>
+        <div class="work-info">
+          <h3>ရေထမ်း</h3>
+          <span class="badge">ရေသယ်အတတ်</span>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="img-container">
+          <img src="imgs/အဝတ်.png" alt="အဝတ်" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 120 120%27%3E%3Ccircle cx=%2760%27 cy=%2760%27 r=%2750%27 fill=%27%23d68b5c%27/%3E%3Ctext x=%2725%27 y=%2778%27 fill=%27white%27 font-size=%2738%27%3E👕%3C/text%3E%3C/svg%3E'">
+        </div>
+        <div class="work-info">
+          <h3>အဝတ်</h3>
+          <span class="badge">လျှော်ဖွပ်ကျွမ်းကျင်</span>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="img-container">
+          <img src="imgs/အုန်းသီး.png" alt="အုန်းသီး" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 120 120%27%3E%3Cpath fill=%27%238B5A2B%27 d=%27M60 20 L75 45 L60 70 L45 45 Z%27/%3E%3Ctext x=%2742%27 y=%2775%27 fill=%27%23FFE500%27 font-size=%2732%27%3E🥥%3C/text%3E%3C/svg%3E'">
+        </div>
+        <div class="work-info">
+          <h3>အုန်းသီး</h3>
+          <span class="badge">ထုတ်လုပ်ရေး</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">📖 About Arkar</h2>
+    <div class="about-card">
+      <div class="about-text">
+        <p><strong>Arkar Professional Life</strong> သည် ရိုးရာအလုပ်ကိုင်များဖြစ်တဲ့ ဆိုက်ကားနင်းခြင်း၊ ရေထပ်ခြင်း၊ ကုန်စည်သယ်ယူခြင်းတို့ကို ခေတ်မီပုံစံဖြင့် တင်ဆက်တဲ့ ဆိုဒ်ဖြစ်ပါတယ်။</p>
+        <p>ကျွန်တော်တို့သည် စစ်မှန်သော အလုပ်သမားများ၏ ဘဝနှင့် ကျွမ်းကျင်မှုကို ဂုဏ်ပြုပါတယ်။ SVG Logo ဒီဇိုင်းထဲမှ ရွှေရောင် နှင့် အနီရောင် အသုံးပြုထားပြီး "မောင်မောင်လွင်" ၏ သွင်ပြင်လက္ခဏာကို အစွဲပြုထားပါတယ်။</p>
+        <p>📍 လုပ်ငန်းအတွေ့အကြုံ ၁၀ နှစ်ကျော် ၊ ကျေးလက်နှင့် မြို့ပြ ဝန်ဆောင်မှုများ။</p>
+      </div>
+      <div class="about-icon">🧑‍🌾🚛</div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Arkar Professional Life — ဆိုက်ကား နှင့် ရေးထပ် ပရော်ဖက်ရှင်နယ် ဆိုဒ်</p>
+  </footer>
+</div>
+
+<script>
+  const svgLogoString = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs><filter id="shadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/></filter></defs>
+  <circle cx="256" cy="256" r="240" fill="#000000" />
+  <circle cx="256" cy="256" r="225" fill="none" stroke="#DA291C" stroke-width="32" filter="url(#shadow)"/>
+  <circle cx="256" cy="256" r="241" fill="none" stroke="#FFE500" stroke-width="2" />
+  <circle cx="256" cy="256" r="209" fill="none" stroke="#FFE500" stroke-width="2" />
+  <circle cx="55" cy="256" r="32" fill="#FFE500" stroke="#DA291C" stroke-width="3"/>
+  <path d="M35 240 Q55 245 75 240 M38 270 Q55 260 72 270 M55 224 Q50 256 55 288" fill="none" stroke="#DA291C" stroke-width="2"/>
+  <circle cx="457" cy="256" r="32" fill="#FFE500" stroke="#DA291C" stroke-width="3"/>
+  <path d="M437 240 Q457 245 477 240 M440 270 Q457 260 474 270 M457 224 Q452 256 457 288" fill="none" stroke="#DA291C" stroke-width="2"/>
+  <g filter="url(#shadow)"><path d="M165 150 L347 150 L347 330 L256 410 L165 330 Z" fill="#FFE500" stroke="#FFE500" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M170 155 L342 155 L342 325 L256 400 L170 325 Z" fill="#FFE500" stroke="#DA291C" stroke-width="3" stroke-linejoin="round"/></g>
+  <g transform="translate(190, 165)"><path d="M5 25 L120 25 L110 35 L20 35 Z" fill="#DA291C"/><rect x="35" y="5" width="12" height="18" fill="#DA291C"/><rect x="60" y="5" width="12" height="18" fill="#DA291C"/><rect x="85" y="5" width="12" height="18" fill="#DA291C"/><polygon points="5,25 0,15 20,25" fill="#DA291C"/><line x1="0" y1="28" x2="130" y2="28" stroke="#FFE500" stroke-width="2"/></g>
+  <g transform="translate(180, 215)" fill="#DA291C"><path d="M 65,20 C 60,10 50,5 45,15 C 48,22 55,25 60,28 C 65,25 72,22 75,15 C 70,5 60,10 55,20 Z"/><circle cx="51" cy="22" r="2" fill="#FFE500"/><circle cx="59" cy="22" r="2" fill="#FFE500"/>
+  <path d="M 105,20 L 105,95 L 100,95 L 100,20 L 90,25 L 90,15 L 102,5 L 103,5 L 115,15 L 115,25 Z"/><path d="M 88,20 L 92,20 M 113,20 L 117,20" stroke="#DA291C" stroke-width="3"/>
+  <path d="M 45,28 C 35,32 25,40 20,50 C 30,52 35,48 42,42 C 40,55 45,70 52,85 C 55,95 52,110 60,120 C 65,110 62,95 60,85 C 68,85 75,70 73,50 C 70,35 60,30 52,28 Z"/><path d="M 60,110 Q 75,120 85,105 Q 90,95 85,85" fill="none" stroke="#DA291C" stroke-width="4" stroke-linecap="round"/><polygon points="85,82 80,90 90,90"/></g>
+  <defs><path id="textPathTop" d="M 70,220 A 195,195 0 0,1 442,220" fill="none"/><path id="textPathBottom" d="M 425,300 A 195,195 0 0,1 87,300" fill="none"/></defs>
+  <text font-family="Zawgyi-One, Neon, Pyidaungsu, sans-serif" font-size="34" font-weight="bold" fill="#FFE500" text-anchor="middle"><textPath href="#textPathTop" startOffset="50%">မောင်မောင်လွင်</textPath></text>
+  <text font-family="Zawgyi-One, Neon, Pyidaungsu, sans-serif" font-size="28" font-weight="bold" fill="#FFE500" text-anchor="middle"><textPath href="#textPathBottom" startOffset="50%">ဂိုးသွင်းတာခံရတဲ့အသင်း</textPath></text>
+</svg>`;
+  document.querySelectorAll('.svg-logo-container').forEach(c => c.innerHTML = svgLogoString);
+
+  const themeBtn = document.getElementById('themeToggleBtn');
+  themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    themeBtn.innerHTML = document.body.classList.contains('dark') ? '☀️ Day' : '🌙 Night';
+  });
+
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileOverlay = document.getElementById('mobileMenuOverlay');
+  const closeMobile = document.getElementById('closeMobileMenu');
+  hamburger.addEventListener('click', () => mobileOverlay.classList.add('open'));
+  closeMobile.addEventListener('click', () => mobileOverlay.classList.remove('open'));
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileOverlay.classList.remove('open');
+      document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById(link.getAttribute('data-nav')).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  document.getElementById('truckLink')?.addEventListener('click', (e) => { e.preventDefault(); alert("🚛 ဆိုက်ကားနင်းတဲ့ပုံ"); });
+  document.getElementById('waterLink')?.addEventListener('click', (e) => { e.preventDefault(); alert("💧 ရေထပ်နေသောပုံ"); });
+</script>
+</body>
+</html>
